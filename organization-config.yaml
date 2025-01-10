@@ -7,6 +7,7 @@ organizationalUnits:
   - name: Security
   - name: Infrastructure
   - name: Suspended
+  - name: SelfManaged
   - name: Applications
   - name: Applications/PRD
   - name: Applications/NonPRD

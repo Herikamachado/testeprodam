@@ -24,7 +24,6 @@ serviceControlPolicies:
     type: customerManaged
     deploymentTargets:
       organizationalUnits:
-        - Infrastructure
         - Security
   - name: AcceleratorGuardrails2
     description: >
@@ -33,7 +32,6 @@ serviceControlPolicies:
     type: customerManaged
     deploymentTargets:
       organizationalUnits:
-        - Infrastructure
         - Security
   - name: AcceleratorGuardrails3
     description: >

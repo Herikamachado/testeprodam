@@ -33,3 +33,9 @@ workloadAccounts:
     email: herikams+prodam_lza_root_ct_sharedservices@amazon.com
     organizationalUnit: Infrastructure
     warm: false
+  - name: TestPolicy
+    description: >- 
+       This account handles all configurations related to the Network structure.
+    email: herikams+prodam_lza_root_ct_testpolicy@amazon.com
+    organizationalUnit: PolicyStaging
+    warm: false

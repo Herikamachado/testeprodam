@@ -9,6 +9,7 @@ transitGateways:
       organizationalUnits:
         - Infrastructure
         - Security
+        - SelfManaged
         - Applications
         - Applications/PRD
         - Applications/NonPRD

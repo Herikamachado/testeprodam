@@ -1,0 +1,81 @@
+providers: []
+roleSets: 
+  - deploymentTargets:
+      organizationalUnits:
+        - Root
+    roles:
+      - name: EC2-Default-SSM-AD-Role
+        instanceProfile: true
+        assumedBy:
+          - type: service
+            principal: ec2.amazonaws.com
+        policies:
+          awsManaged:
+            - AmazonSSMManagedInstanceCore
+            - AmazonSSMDirectoryServiceAccess
+            - CloudWatchAgentServerPolicy
+        boundaryPolicy: AWSAccelerator-Default-Boundary-Policy
+policySets: []
+groupSets: 
+  - deploymentTargets:
+      organizationalUnits:
+        - Root
+    groups:
+      - name: Administrators
+        policies:
+          awsManaged:
+            - AdministratorAccess
+userSets: 
+  - deploymentTargets:
+      accounts:
+        - Management
+    users:
+      - username: breakGlassUser01
+        group: Administrators
+identityCenter:
+  name: IdentityCenter
+  delegatedAdminAccount: Audit
+  identityCenterPermissionSets:
+    - name: prodam-sso-administrator
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: prodam-sso-billing
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/Billing
+      sessionDuration: 60
+    - name: prodam-sso-securityaudit
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/SecurityAudit
+          - arn:aws:iam::aws:policy/AmazonDetectiveFullAccess
+          - arn:aws:iam::aws:policy/AWSSSOMemberAccountAdministrator
+          - arn:aws:iam::aws:policy/job-function/SupportUser
+      sessionDuration: 60
+    - name: prodam-sso-securityresponse
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: prodam-sso-network-admin
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/NetworkAdministrator
+      sessionDuration: 60
+    - name: prodam-sso-db-management
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/DatabaseAdministrator
+      sessionDuration: 60
+    - name: prodam-sso-app-monitoring
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/SupportUser
+    - name: prodam-sso-app-billing
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/Billing
+      sessionDuration: 60
+  

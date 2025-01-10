@@ -1,0 +1,14 @@
+enable: true
+organizationalUnits:
+  - name: Security
+  - name: Infrastructure
+  - name: SelfManaged
+  - name: Suspended
+  - name: Applications
+  - name: Applications/PRD
+  - name: Applications/NonPRD
+  - name: PolicyStaging
+  - name: Sandbox
+serviceControlPolicies: []
+taggingPolicies: []
+backupPolicies: []

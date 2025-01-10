@@ -1,0 +1,251 @@
+defaultVpc:
+  delete: true
+  excludeAccounts: []
+transitGateways:
+  - name: Network-Main
+    account: Network
+    region: sa-east-1
+    shareTargets:
+      organizationalUnits:
+        - Infrastructure
+        - Security
+        - SelfManaged
+        - Applications
+        - Applications/PRD
+        - Applications/NonPRD
+        - PolicyStaging
+        - Sandbox
+    asn: 65000
+    dnsSupport: enable
+    vpnEcmpSupport: enable
+    defaultRouteTableAssociation: disable
+    defaultRouteTablePropagation: disable
+    autoAcceptSharingAttachments: enable
+    routeTables:
+      - name: Network-Main-Core
+        routes: []
+      - name: Network-Main-Spoke
+        routes: []
+endpointPolicies: 
+  - name: Default
+    document: vpc-endpoint-policies/default.json
+vpcs: 
+  - name: Network-Endpoint
+    account: Network
+    region: sa-east-1
+    cidrs:
+      - 10.122.0.0/24
+    enableDnsHostnames: true
+    enableDnsSupport: true
+    instanceTenancy: default
+    routeTables: 
+      - name: Network-Endpoints-Tgw-A
+        routes: []
+      - name: Network-Endpoints-Tgw-B
+        routes: []
+      - name: Network-Endpoints-Tgw-C
+        routes: []
+      - name: Network-Endpoints-A
+        routes:
+          - name: TgwRoute
+            destination: 10.122.0.0/16
+            type: transitGateway
+            target: Network-Main
+      - name: Network-Endpoints-B
+        routes:
+          - name: TgwRoute
+            destination: 10.122.0.0/16
+            type: transitGateway
+            target: Network-Main
+      - name: Network-Endpoints-C
+        routes:
+          - name: TgwRoute
+            destination: 10.122.0.0/16
+            type: transitGateway
+            target: Network-Main
+    subnets: 
+      - name: Network-Endpoints-A
+        availabilityZone: a
+        routeTable: Network-Endpoints-A
+        ipv4CidrBlock: 10.122.0.0/26
+      - name: Network-Endpoints-B
+        availabilityZone: b
+        routeTable: Network-Endpoints-B
+        ipv4CidrBlock: 10.122.0.64/26
+      - name: Network-Endpoints-C
+        availabilityZone: c
+        routeTable: Network-Endpoints-C
+        ipv4CidrBlock: 10.122.0.128/26
+      - name: Network-EndpointsTgwAttach-A
+        availabilityZone: a
+        routeTable: Network-Endpoints-Tgw-A
+        ipv4CidrBlock: 10.122.0.208/28
+      - name: Network-EndpointsTgwAttach-B
+        availabilityZone: b
+        routeTable: Network-Endpoints-Tgw-B
+        ipv4CidrBlock: 10.122.0.224/28
+      - name: Network-EndpointsTgwAttach-C
+        availabilityZone: c
+        routeTable: Network-Endpoints-Tgw-C
+        ipv4CidrBlock: 10.122.0.240/28
+    natGateways: []
+    transitGatewayAttachments: 
+      - name: Network-Endpoints
+        transitGateway:
+          name: Network-Main
+          account: Network
+        routeTableAssociations:
+          - Network-Main-Core
+        routeTablePropagations:
+          - Network-Main-Core
+          - Network-Main-Spoke
+        subnets:
+          - Network-EndpointsTgwAttach-A
+          - Network-EndpointsTgwAttach-B
+          - Network-EndpointsTgwAttach-C
+    interfaceEndpoints:
+      central: true
+      defaultPolicy: Default
+      subnets:
+        - Network-Endpoints-A
+        - Network-Endpoints-B
+        - Network-Endpoints-C
+      endpoints:
+        - service: ec2
+    tags: []
+  - name: SharedServices-Main
+    region: sa-east-1
+    account: SharedServices
+    cidrs:
+      - 10.122.1.0/24
+    internetGateway: true
+    enableDnsHostnames: true
+    enableDnsSupport: true
+    instanceTenancy: default
+    routeTables: 
+      - name: SharedServices-Tgw-A
+        routes: []
+      - name: SharedServices-Tgw-B
+        routes: []
+      - name: SharedServices-Tgw-C
+        routes: []
+      - name: SharedServices-A
+        routes:
+          - name: TgwRoute
+            destination: 0.0.0.0/0
+            type: natGateway
+            target: SharedServices-NATGW-A
+      - name: SharedServices-B
+        routes:
+          - name: TgwRoute
+            destination: 0.0.0.0/0
+            type: natGateway
+            target: SharedServices-NATGW-B
+      - name: SharedServices-C
+        routes:
+          - name: TgwRoute
+            destination: 0.0.0.0/0
+            type: natGateway
+            target: SharedServices-NATGW-C
+    subnets: 
+      - name: SharedServices-A
+        availabilityZone: a
+        routeTable: SharedServices-A
+        ipv4CidrBlock: 10.122.1.0/26
+      - name: SharedServices-B
+        availabilityZone: b
+        routeTable: SharedServices-B
+        ipv4CidrBlock: 10.122.1.64/26
+      - name: SharedServices-C
+        availabilityZone: c
+        routeTable: SharedServices-C
+        ipv4CidrBlock: 10.122.1.128/26
+      - name: SharedServices-Tgw-A
+        availabilityZone: a
+        routeTable: SharedServices-Tgw-A
+        ipv4CidrBlock: 10.122.1.208/28
+      - name: SharedServices-Tgw-B
+        availabilityZone: b
+        routeTable: SharedServices-Tgw-B
+        ipv4CidrBlock: 10.122.1.224/28
+      - name: SharedServices-Tgw-C
+        availabilityZone: c
+        routeTable: SharedServices-Tgw-C
+        ipv4CidrBlock: 10.122.1.240/28
+    natGateways: 
+      - name: SharedServices-NATGW-A
+        subnet: SharedServices-A
+      - name: SharedServices-NATGW-B
+        subnet: SharedServices-B
+      - name: SharedServices-NATGW-C
+        subnet: SharedServices-C
+    transitGatewayAttachments: 
+      - name: SharedServices
+        transitGateway:
+          name: Network-Main
+          account: Network
+        routeTableAssociations:
+          - Network-Main-Core
+        routeTablePropagations:
+          - Network-Main-Core
+          - Network-Main-Spoke
+        subnets:
+          - SharedServices-Tgw-A
+          - SharedServices-Tgw-B
+          - SharedServices-Tgw-C
+    interfaceEndpoints:
+      central: false
+      defaultPolicy: Default
+      subnets:
+        - SharedServices-A
+        - SharedServices-B
+        - SharedServices-C
+      endpoints:
+        - service: ec2
+    tags: []
+customerGateways:
+  - name: accelerator-cgw
+    account: Network
+    region: sa-east-1
+    ipAddress: 177.22.128.31
+    asn: 65500
+    vpnConnections:
+      - name: accelerator-vpn
+        transitGateway: Network-Main
+        routeTableAssociations:
+          - Network-Main-Core
+        routeTablePropagations:
+          - Network-Main-Core
+          - Network-Main-Spoke
+        staticRoutesOnly: false
+        tunnels:
+          - dpdTimeoutAction: restart
+            dpdTimeoutSeconds: 60
+            ikeVersions: [2]
+            logging:
+              enable: true
+            phase1:
+              dhGroups: [14]
+              encryptionAlgorithms: [AES256]
+              integrityAlgorithms: [SHA2-256]
+            phase2:
+              dhGroups: [14]
+              encryptionAlgorithms: [AES256]
+              integrityAlgorithms: [SHA2-256]
+            tunnelInsideCidr: 169.254.200.0/30
+            preSharedKey: Key1-AbcXyz
+          - dpdTimeoutAction: restart
+            dpdTimeoutSeconds: 60
+            ikeVersions: [2]
+            logging:
+              enable: true
+            phase1:
+              dhGroups: [14]
+              encryptionAlgorithms: [AES256]
+              integrityAlgorithms: [SHA2-256]
+            phase2:
+              dhGroups: [14]
+              encryptionAlgorithms: [AES256]
+              integrityAlgorithms: [SHA2-256]
+            tunnelInsideCidr: 169.254.200.100/30
+            preSharedKey: Key1-AbcXyz

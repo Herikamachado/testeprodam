@@ -1,0 +1,35 @@
+mandatoryAccounts:
+  # We recommend you do not change mandatory account names. These are used within Landing Zone Accelerator to reference the accounts from other config files.
+  # The "name" value does not currently support spaces
+  # The "name" value DOES NOT need to match the account name
+  - name: Management
+    description: The management (primary) account. Do not change the name field for this mandatory account. Note, the account name key does not need to match the AWS account name.
+    email: herikams+prodam_lza_root_ct@amazon.com
+    organizationalUnit: Root
+  - name: LogArchive
+    description: The log archive account. Do not change the name field for this mandatory account. Note, the account name key does not need to match the AWS account name.
+    email: herikams+prodam_lza_root_ct_logarquive@amazon.com
+    organizationalUnit: Security
+  - name: Audit
+    description: The security audit account (also referred to as the audit account). Do not change the name field for this mandatory account. Note, the account name key does not need to match the AWS account name.
+    email: herikams+prodam_lza_root_ct_audit@amazon.com
+    organizationalUnit: Security
+workloadAccounts:
+  - name: LZA-External
+    description: >- 
+       This account handles all configurations related to the LZA structure.
+    email: herikams+prodam_lza_root_ct_external@amazon.com
+    organizationalUnit: Infrastructure
+    warm: false
+  - name: Network
+    description: >- 
+       This account handles all configurations related to the Network structure.
+    email: herikams+prodam_lza_root_ct_network@amazon.com
+    organizationalUnit: Infrastructure
+    warm: false
+  - name: SharedServices
+    description: >- 
+       This account handles all configurations related to the Network structure.
+    email: herikams+prodam_lza_root_ct_sharedservices@amazon.com
+    organizationalUnit: Infrastructure
+    warm: false

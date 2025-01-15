@@ -78,4 +78,130 @@ identityCenter:
         awsManaged:
           - arn:aws:iam::aws:policy/job-function/Billing
       sessionDuration: 60
-  
+    - name: AccPermissionSet-AdministratorAccessGlobal
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-AdministratorAccessSmartCore 
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-AdministratorAccessSmartIOT
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-AdministratorAccessSmartGPS
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-AdministratorAccessSmartNeo
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/AdministratorAccess
+      sessionDuration: 60
+
+    # Power User Permission Sets
+    - name: AccPermissionSet-PowerUserAccessGlobal
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/PowerUserAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-PowerUserAccessSmartCore 
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/PowerUserAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-PowerUserAccessSmartIOT
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/PowerUserAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-PowerUserAccessSmartGPS
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/PowerUserAccess
+      sessionDuration: 60
+    - name: AccPermissionSet-PowerUserAccessSmartNeo 
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/PowerUserAccess
+      sessionDuration: 60 
+
+    # Permission set by roles
+    - name: AccPermissionSet-Security-engineer
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/SecurityAudit
+          - arn:aws:iam::aws:policy/AWSSSOMemberAccountAdministrator
+      sessionDuration: 60
+    - name: AccPermissionSet-Network-engineer
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/NetworkAdministrator
+      sessionDuration: 60
+    - name: AccPermissionSet-ReadOnlyAccess 
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/ReadOnlyAccess
+      sessionDuration: 60  
+    - name: AccPermissionSet-Viewonly
+      policies:
+        awsManaged:
+          - arn:aws:iam::aws:policy/ReadOnlyAccess
+      sessionDuration: 60  
+    - name: AccPermissionSet-Billing
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/job-function/Billing
+      sessionDuration: 60  
+    - name: AccPermissionSet-monitoring-readonly
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/AWSGrafanaConsoleReadOnlyAccess
+      sessionDuration: 60 
+    - name: AccPermissionSet-monitoring-engineer
+      policies: 
+        awsManaged:
+          - arn:aws:iam::aws:policy/AWSGrafanaAccountAdministrator
+          - arn:aws:iam::aws:policy/AmazonPrometheusFullAccess
+      sessionDuration: 60 
+
+    # Permission sets  to Workloads Accounts Developers 
+    - name: AccPermissionSet-developerSmartCore  
+      policies: 
+        inlinePolicy: iam-policies/developers-inline-policy.json
+      sessionDuration: 60 
+    - name: AccPermissionSet-developerSmartIOT  
+      policies: 
+        inlinePolicy: iam-policies/developers-inline-policy.json
+      sessionDuration: 60 
+    - name: AccPermissionSet-developerSmartGPS  
+      policies: 
+        inlinePolicy: iam-policies/developers-inline-policy.json
+      sessionDuration: 60 
+    - name: AccPermissionSet-tech-leadSmartNeo 
+      policies: 
+        inlinePolicy: iam-policies/developers-inline-policy.json
+      sessionDuration: 60 
+
+    # Permission sets  to Workloads Accounts tech Leads
+    - name: AccPermissionSet-tech-leadSmartCore
+      policies: 
+        inlinePolicy: iam-policies/tech-leads-inline-policy.json
+      sessionDuration: 60 
+    - name: AccPermissionSet-tech-leadSmartIOT
+      policies: 
+        inlinePolicy: iam-policies/tech-leads-inline-policy.json
+      sessionDuration: 60  
+    - name: AccPermissionSet-tech-leadSmartGPS
+      policies: 
+        inlinePolicy: iam-policies/tech-leads-inline-policy.json
+      sessionDuration: 60 
+    - name: AccPermissionSet-tech-leadSmartNeo
+      policies: 
+        inlinePolicy: iam-policies/tech-leads-inline-policy.json
+      sessionDuration: 60 
